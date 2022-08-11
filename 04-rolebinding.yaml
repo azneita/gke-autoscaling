@@ -1,0 +1,11 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: modify-hpas-to-sa
+subjects:
+  - kind: ServiceAccount
+    name: sample-service-account
+roleRef:
+  kind: Role
+  name: modify-hpas
+  apiGroup: rbac.authorization.k8s.io

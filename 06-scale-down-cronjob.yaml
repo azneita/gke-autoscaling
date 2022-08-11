@@ -1,0 +1,17 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: scale-down-cronjob
+spec:
+  schedule: "0 0 6 * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          serviceAccountName: sample-service-account
+          containers:
+          - name: scale-down-cronjob
+            image: gcr.io/google.com/cloudsdktool/google-cloud-cli:latest
+            args:
+            - kubectl patch hpa sample-application-hpa --patch-file scale-down-patch.yaml
+          restartPolicy: "OnFailure"
